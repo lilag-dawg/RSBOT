@@ -1,16 +1,23 @@
 import pyautogui
 import numpy as np
 import cv2
-import mss
+# import mss
 import random
-import time
+# import time
 
 
 # lets do a woodcutting bot, the should be able to cut multiple trees and drop inventory then restart.
 
 
-# Find the contours of the red shapes and return their positions
-def getContoursOutlines(frame):
+def getContoursOutlines(frame: cv2.Mat) -> list:
+    """Find the contours of the red shapes and return their positions.
+
+    Args:
+        frame (cv2.Mat): image
+
+    Returns:
+        list: contour of the object
+    """
 
     # Filter color
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
@@ -27,8 +34,16 @@ def getContoursOutlines(frame):
 
     return contours
 
-# Find a random coordinates inside the shape. The shape is assume to be always convex.
-def getRandomClickCoordinates(shape):
+
+def getRandomClickCoordinates(shape: list) -> list:
+    """Find a random coordinates inside the shape. The shape is assume to be always convex.
+
+    Args:
+        shape (list): list of points representing the point
+
+    Returns:
+        list: random coordinate inside the shape
+    """
 
     # Select random index
     index = random.randrange(0,len(shape))
@@ -84,9 +99,6 @@ def getRandomClickCoordinates(shape):
     return point
 
 
-
-
-
 def main():
     # with mss.mss() as sct:
     #     # The screen part to capture
@@ -95,8 +107,10 @@ def main():
     #     sct_img = sct.grab(monitor)
     #     img = np.array(sct_img)
 
-    # path
-    path = r'C:\Users\alexi\Documents\PythonProject\pythonProject\RSBOT\marker_screenshot.png'
+    # watchout for absolute path
+    # path = r'C:\Users\alexi\Documents\PythonProject\pythonProject\RSBOT\marker_screenshot.png'
+    #FIXME: change from absolute to relative
+    path = r'C:\\Users\\alexi\\Documents\\PythonProject\\pythonProject\\RSBOT\\marker_screenshot.png'
     img = cv2.imread(path)
 
     # Filter color
@@ -110,6 +124,8 @@ def main():
 
     if cv2.waitKey(0):
         cv2.destroyAllWindows()
+
+
 if __name__ == "__main__":
     main()
 
